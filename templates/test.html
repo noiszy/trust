@@ -32,13 +32,16 @@
         console.log("database: ",database)
 
         //write something to db
-{#        console.log("writing test data")#}
-{#        firebase.database().ref('users/example_uid123456').set({#}
-{#            username: 'example_name',#}
-{#            email: 'example_email'#}
-{#        });#}
-{#        console.log("written")#}
+        /*
+        console.log("writing test data")
+        firebase.database().ref('users/example_uid123456').set({
+            username: 'example_name',
+            email: 'example_email'
+        });
+        console.log("written")
+        */
 
+        /*
         console.log("now get")
 
         function get_test_data(userId) {
@@ -48,10 +51,22 @@
                 // ...
             });
         }
+
         gotit = get_test_data('example_uid123456')
         console.log("gotit: ",gotit)
+        */
 
-        console.log("database: ",database)
+        // THIS WORKS - YESSSSSSS
+        console.log('try to get...')
+
+        var ref = firebase.database().ref();
+
+        ref.on("value", function(snapshot) {
+            console.log(snapshot.val());
+        }, function (error) {
+            console.log("Error: " + error.code);
+        });
+
 
     </script>
 
