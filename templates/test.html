@@ -4,34 +4,53 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="../static/trust_fb.js"></script>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='trust_fb.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='trust_fb.js') }}">
 
     <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
 
+    /* MUST FIX DATABASE RULES FOR PERMISSIONS:
+    https://stackoverflow.com/questions/37403747/firebase-permission-denied
+    */
+
     <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyD4fOx-0Qehd9mgFVy9kFItAQRw_-fmDcc",
-        authDomain: "trust-2e8ba.firebaseapp.com",
-        databaseURL: "https://trust-2e8ba.firebaseio.com",
-        projectId: "trust-2e8ba",
-        storageBucket: "",
-        messagingSenderId: "6136535332"
-      };
-      firebase.initializeApp(config);
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyD4fOx-0Qehd9mgFVy9kFItAQRw_-fmDcc",
+            authDomain: "trust-2e8ba.firebaseapp.com",
+            databaseURL: "https://trust-2e8ba.firebaseio.com",
+            projectId: "trust-2e8ba",
+            storageBucket: "",
+            messagingSenderId: "6136535332"
+        };
+        firebase.initializeApp(config);
     </script>
 
     <script>
 
         // Get a reference to the database service
         var database = firebase.database();
+        console.log("database: ",database)
 
         //write something to db
-        writeTestData(
-            userId='123456',
-            name='test_name',
-            email='test@test.com'
-        )
+{#        console.log("writing test data")#}
+{#        firebase.database().ref('users/example_uid123456').set({#}
+{#            username: 'example_name',#}
+{#            email: 'example_email'#}
+{#        });#}
+{#        console.log("written")#}
+
+        console.log("now get")
+
+        function get_test_data(userId) {
+//            var userId = firebase.auth().currentUser.uid;
+            return firebase.database().ref('/users/' + userId).once('value').then(function (snapshot) {
+                var username = snapshot.val().username;
+                // ...
+            });
+        }
+        gotit = get_test_data('example_uid123456')
+        console.log("gotit: ",gotit)
+
         console.log("database: ",database)
 
     </script>
